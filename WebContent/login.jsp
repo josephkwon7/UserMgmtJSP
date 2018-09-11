@@ -1,0 +1,60 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+<%@ include file="./commons/_head.jspf" %>
+
+</head>
+<body>
+    <%@ include file="./commons/_top.jspf" %>
+
+	<div class="container">
+		<div class="row">
+			<div class="span12">
+				<section id="typography">
+				<div class="page-header">
+					<h1>로그인</h1>
+				</div>
+			
+				
+				<form class="form-horizontal" action="/users/login" method="post">
+					<%--
+					Object errorMessage = request.getAttribute("errorMessage");
+					if (errorMessage != null) {
+					--%>
+					<c:choose>
+					<c:when test="${!empty errorMessage}">
+					<div class="control-group">
+						<%-- <lable class="error"><% out.println(errorMessage); %></lable> --%>
+						<lable class="error"><c:out value="${errorMessage}"></c:out></lable>
+					</div>
+					</c:when>
+					</c:choose>
+					<%--
+					}
+					--%>
+					<div class="control-group">
+						<label class="control-label" for="userId">사용자 아이디</label>
+						<div class="controls">
+							<input type="text" name="userId" value="" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="password">비밀번호</label>
+						<div class="controls">
+							<input type="password" id="password" name="password" placeholder="">
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="controls">
+							<button type="submit" class="btn btn-primary">로그인</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
