@@ -1,9 +1,14 @@
 package net.slipp.user;
 
+import com.google.gson.annotations.Expose;
+
 public class User {
+    @Expose
 	private String userId;
 	private String password;
+	@Expose
 	private String name;
+	@Expose
 	private String email;
 
 	public User() {
