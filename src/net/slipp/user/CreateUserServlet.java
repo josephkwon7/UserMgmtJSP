@@ -22,19 +22,7 @@ public class CreateUserServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		// 4자 이상, 12자 이하, 영문자/숫자만 허용
 		String userId = request.getParameter("userId");
-		if (userId == null || userId.equals("")) {
-		    // 에러 처리
-		}
-		
-		int lengthOfUserId = userId.length();
-		if (lengthOfUserId < 4 && lengthOfUserId > 12) {
-		    // 에러처리 
-		}
-		
-		String regexp = "[A-Za-z0-9](4, 12)";
-		
 		String password = request.getParameter("password");
-		// 2자 이상, 10자 이하.
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		
