@@ -24,14 +24,12 @@
 					Object errorMessage = request.getAttribute("errorMessage");
 					if (errorMessage != null) {
 					--%>
-					<c:choose>
-					<c:when test="${!empty errorMessage}">
+					<c:if test="${not empty errorMessage}">
 					<div class="control-group">
-						<%-- <lable class="error"><% out.println(errorMessage); %></lable> --%>
-						<lable class="error"><c:out value="${errorMessage}"></c:out></lable>
+						<%-- <label class="error"><% out.println(errorMessage); %></label> --%>
+						<label class="error">${errorMessage}</label>
 					</div>
-					</c:when>
-					</c:choose>
+					</c:if>
 					<%--
 					}
 					--%>
