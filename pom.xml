@@ -53,7 +53,7 @@
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<testSourceDirectory>test</testSourceDirectory>
-		<outputDirectory>webapp/WEB-INF/classes</outputDirectory>
+		<outputDirectory>webapps/WEB-INF/classes</outputDirectory>
 		<testOutputDirectory>target/test-classes</testOutputDirectory>
 
 		<plugins>
@@ -82,7 +82,7 @@
 				<artifactId>maven-dependency-plugin</artifactId>
 				<version>3.1.1</version>
 				<configuration>
-					<outputDirectory>${project.basedir}/webapp/WEB-INF/lib</outputDirectory>
+					<outputDirectory>webapps/WEB-INF/lib</outputDirectory>
 					<overWriteReleases>false</overWriteReleases>
 					<overWriteSnapshots>true</overWriteSnapshots>
 					<overWriteIfNewer>true</overWriteIfNewer>
