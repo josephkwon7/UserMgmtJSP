@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class UserDAO {
     public Connection getConnection() {
-        String url = "jdbc:mysql://aws02/slipp_dev";
+        String url = "jdbc:mysql://aws02/slipp_dev?autoReconnect=true&useSSL=false";
         String id = "root";
         String pw = "Akdldp!@34";
         
