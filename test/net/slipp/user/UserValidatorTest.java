@@ -13,8 +13,11 @@ import javax.validation.ValidatorFactory;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UserValidatorTest {
+    private static final Logger logger = LoggerFactory.getLogger(UserValidatorTest.class);
 
     private static Validator validator;
     
@@ -29,7 +32,7 @@ public class UserValidatorTest {
         User user = new User(null, "password", "name", "");
         Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
         assertEquals(1, constraintViolations.size());
-        System.out.println(constraintViolations.iterator().next().getMessage());
+        logger.debug(constraintViolations.iterator().next().getMessage());
     }
     
     @Test
@@ -37,12 +40,12 @@ public class UserValidatorTest {
         User user = new User("us", "password", "name", "");
         Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
         assertEquals(1, constraintViolations.size());
-        System.out.println(constraintViolations.iterator().next().getMessage());
+        logger.debug(constraintViolations.iterator().next().getMessage());
 
         user = new User("userIduserId2", "password", "name", "");
         constraintViolations = validator.validate(user);
         assertEquals(1, constraintViolations.size());
-        System.out.println(constraintViolations.iterator().next().getMessage());
+        logger.debug(constraintViolations.iterator().next().getMessage());
     }
 
     @Test
@@ -50,7 +53,7 @@ public class UserValidatorTest {
         User user = new User("user", "password", "name", "email");
         Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
         assertEquals(1, constraintViolations.size());
-        System.out.println(constraintViolations.iterator().next().getMessage());
+        logger.debug(constraintViolations.iterator().next().getMessage());
         
     }
     
@@ -62,7 +65,7 @@ public class UserValidatorTest {
         Iterator<ConstraintViolation<User>> violations = constraintViolations.iterator();
         while (violations.hasNext()) {
             ConstraintViolation<User> each = violations.next();
-            System.out.println(each.getPropertyPath() + " : " + each.getMessage());
+            logger.debug("{} : {}", each.getPropertyPath(), each.getMessage());
         }
     }
 }

@@ -10,6 +10,8 @@
 		</encoder>
 	</appender>
 
+    <logger name="net.slipp" level="DEBUG" />
+
 	<root level="debug">
 		<appender-ref ref="STDOUT" />
 	</root>
