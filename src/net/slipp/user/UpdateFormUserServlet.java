@@ -20,7 +20,6 @@ public class UpdateFormUserServlet extends HttpServlet {
             resp.sendRedirect("/");
             return;
         }
-        System.out.println("User Id : " + userId);
         UserDAO userDao = new UserDAO();
         try {
             User user = userDao.findByUserId(userId);

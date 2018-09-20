@@ -28,11 +28,12 @@ public class UserDAOTest {
     public void crud() throws Exception {
         User user = UserTest.TEST_USER;
         userDao.removeUser(user.getUserId());
+        //new User("userId", "password", "name", "javajigi@slipp.net")
         userDao.addUser(UserTest.TEST_USER);
         User dbUser = userDao.findByUserId(user.getUserId());
         assertEquals(user, dbUser);
         
-        User updatedUser = new User(user.getUserId(), "uPassword", "uName", "uEmail");
+        User updatedUser = new User(user.getUserId(), "uPassword", "이름2", "uEmail");
         userDao.updateUser(updatedUser);
         dbUser = userDao.findByUserId(updatedUser.getUserId());
         assertEquals(updatedUser, dbUser);

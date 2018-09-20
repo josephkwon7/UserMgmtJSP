@@ -98,7 +98,7 @@
 				<configuration>
 					<outputDirectory>webapps/WEB-INF/lib</outputDirectory>
 					<overWriteReleases>false</overWriteReleases>
-					<overWriteSnapshots>true</overWriteSnapshots>
+					<overWriteSnapshots>false</overWriteSnapshots>
 					<overWriteIfNewer>true</overWriteIfNewer>
 				</configuration>
 			</plugin>
@@ -107,7 +107,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.2.2</version>
 				<configuration>
-				    <warSourceDirectory>webapps</warSourceDirectory>
+					<warSourceDirectory>webapps</warSourceDirectory>
 					<webXml>webapps/WEB-INF/web.xml</webXml>
 				</configuration>
 			</plugin>
