@@ -4,14 +4,20 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UserTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserTest.class);
 	
 	public static User TEST_USER = new User("userId", "password", "name", "javajigi@slipp.net");
-    private UserDAO userDAO;
+    
+	private UserDAO userDAO;
 
 	
 	@Before
@@ -48,4 +54,5 @@ public class UserTest {
         userDAO.addUser(user);
 		User.login(TEST_USER.getUserId(), "password2");
 	}
+	
 }

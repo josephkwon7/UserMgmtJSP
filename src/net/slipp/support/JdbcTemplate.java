@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +13,7 @@ import org.slf4j.LoggerFactory;
 public class JdbcTemplate {
     private static final Logger logger = LoggerFactory.getLogger(JdbcTemplate.class);
     
-    public void executeUpdate(String sql, PrepareStatementSetter pss) throws SQLException {
+    public void executeUpdate(String sql, PreparedStatementSetter pss) throws SQLException {
         Connection conn = null;
         PreparedStatement pstmt = null;
         try {
@@ -31,7 +33,23 @@ public class JdbcTemplate {
         }
     }
     
-    public Object executeQuery(String sql, PrepareStatementSetter pss, RowMapper rm) throws Exception {
+    public void executeUpdate(String sql, Object... parameters) throws SQLException {
+        executeUpdate(sql, createPreparedStatementSetter(parameters));
+    }
+    
+    public <T> T executeQuery(String sql, RowMapper<T> rm, PreparedStatementSetter pss) throws Exception {
+       List<T> list = list(sql, rm, pss);
+       if (list == null || list.isEmpty()) {
+           return null;
+       }
+       return list.get(0);
+    }
+    
+    public <T> T executeQuery(String sql, RowMapper<T> rm, Object... parameters) throws Exception {
+        return executeQuery(sql, rm, createPreparedStatementSetter(parameters));
+    }
+
+    public <T> List<T> list(String sql, RowMapper<T> rm, PreparedStatementSetter pss) throws SQLException {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -39,12 +57,18 @@ public class JdbcTemplate {
             conn = ConnectionManager.getConnection();
             pstmt = conn.prepareStatement(sql);
             pss.setParameters(pstmt);
+            logger.debug(pstmt.toString());
+            
             rs = pstmt.executeQuery();
             if (!rs.next()) {
                 return null;
             }
-            
-            return rm.mapRow(rs);
+            rs.previous(); // move cursor to the beginning point again.
+            List<T> list = new ArrayList<T>();
+            while (rs.next()) {
+                list.add(rm.mapRow(rs));
+            }
+            return list;
         } finally {
             if (rs != null) {
                 rs.close();
@@ -56,5 +80,20 @@ public class JdbcTemplate {
                 conn.close();
             }
         }
+    }
+    
+    public <T> List<T> list(String sql, RowMapper<T> rm, Object... parameters) throws Exception {
+        return list(sql, rm, createPreparedStatementSetter(parameters));
+    }
+    
+    private PreparedStatementSetter createPreparedStatementSetter(Object... parameters) {
+        return new PreparedStatementSetter() {
+            @Override
+            public void setParameters(PreparedStatement pstmt) throws SQLException {
+                for(int i = 0; i < parameters.length; i++) {
+                    pstmt.setObject(i+1, parameters[i]);
+                }
+            }
+        };
     }
 }

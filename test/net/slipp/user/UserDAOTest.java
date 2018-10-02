@@ -2,39 +2,57 @@ package net.slipp.user;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UserDAOTest {
     
-    private UserDAO userDao;
+    private static final Logger logger = LoggerFactory.getLogger(UserDAOTest.class);
+    
+    private UserDAO userDAO;
     
     @Before
     public void setup() {
-        userDao = new UserDAO();
+        userDAO = new UserDAO();
     }
-
+    
     @Test
     public void crud() throws Exception {
         User user = UserTest.TEST_USER;
-        userDao.removeUser(user.getUserId());
+        userDAO.removeUser(user.getUserId());
         //new User("userId", "password", "name", "javajigi@slipp.net")
-        userDao.addUser(UserTest.TEST_USER);
-        User dbUser = userDao.findByUserId(user.getUserId());
+        userDAO.addUser(UserTest.TEST_USER);
+        User dbUser = userDAO.findByUserId(user.getUserId());
+        logger.debug("dbUser : " + dbUser);
         assertEquals(user, dbUser);
         
         User updatedUser = new User(user.getUserId(), "uPassword", "이름2", "uEmail");
-        userDao.updateUser(updatedUser);
-        dbUser = userDao.findByUserId(updatedUser.getUserId());
+        userDAO.updateUser(updatedUser);
+        dbUser = userDAO.findByUserId(updatedUser.getUserId());
         assertEquals(updatedUser, dbUser);
     }
     
     @Test
     public void 존재하지_않는_사용자_조회() throws Exception {
         User user = UserTest.TEST_USER;
-        userDao.removeUser(user.getUserId());
-        User dbUser = userDao.findByUserId(user.getUserId());
+        userDAO.removeUser(user.getUserId());
+        User dbUser = userDAO.findByUserId(user.getUserId());
+        logger.debug("dbUser : {}", dbUser);
         assertNull(dbUser);
+    }
+    
+    @Test
+    public void findUsers() throws Exception {
+        List<User> users = new ArrayList<User>();
+        users = userDAO.findUsers();
+        assertTrue(users.size() > 0);
+        logger.debug(users.toString());
     }
 }
