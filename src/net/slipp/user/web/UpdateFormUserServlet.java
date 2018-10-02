@@ -1,4 +1,4 @@
-package net.slipp.user;
+package net.slipp.user.web;
 
 import java.io.IOException;
 
@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import core.SessionUtils;
+import net.slipp.user.User;
+import net.slipp.user.UserDAO;
 
 @WebServlet("/users/updateForm")
 public class UpdateFormUserServlet extends HttpServlet {

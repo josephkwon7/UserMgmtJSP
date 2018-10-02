@@ -7,9 +7,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.slipp.support.jdbc.DataAccessException;
-import net.slipp.support.jdbc.JdbcTemplate;
-import net.slipp.support.jdbc.RowMapper;
+import core.jdbc.DataAccessException;
+import core.jdbc.JdbcTemplate;
+import core.jdbc.RowMapper;
 
 public class UserDAO {
     private static final Logger logger = LoggerFactory.getLogger(UserDAO.class);
