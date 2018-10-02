@@ -1,9 +1,8 @@
-package net.slipp.support;
+package net.slipp.support.jdbc;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public interface PreparedStatementSetter {
-    abstract void setParameters(PreparedStatement pstmt) throws SQLException;
-
+    abstract void setParameters(PreparedStatement pstmt);
 }

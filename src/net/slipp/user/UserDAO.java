@@ -7,28 +7,33 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.slipp.support.JdbcTemplate;
-import net.slipp.support.RowMapper;
+import net.slipp.support.jdbc.DataAccessException;
+import net.slipp.support.jdbc.JdbcTemplate;
+import net.slipp.support.jdbc.RowMapper;
 
 public class UserDAO {
     private static final Logger logger = LoggerFactory.getLogger(UserDAO.class);
 
-    public void addUser(User user) throws SQLException {
+    public void addUser(User user) {
         JdbcTemplate template = new JdbcTemplate();
         String sql = "INSERT INTO users VALUES(?, ?, ?, ?)";
         template.executeUpdate(sql, user.getUserId(), user.getPassword(), user.getName(), user.getEmail());
     }
 
-    public User findByUserId(String userId) throws Exception {
+    public User findByUserId(String userId) {
         RowMapper<User> rm = new RowMapper<User>() {
             @Override
-            public User mapRow(ResultSet rs) throws SQLException {
-                return new User(
-                        rs.getString("userId"),
-                        rs.getString("password"),
-                        rs.getString("name"),
-                        rs.getString("email")
-                        );
+            public User mapRow(ResultSet rs) {
+                try {
+                    return new User(
+                            rs.getString("userId"),
+                            rs.getString("password"),
+                            rs.getString("name"),   
+                            rs.getString("email")
+                            );
+                } catch (SQLException e) {
+                    throw new DataAccessException(e);
+                }
             }
         };
         
@@ -52,13 +57,17 @@ public class UserDAO {
     public List<User> findUsers() throws Exception {
         RowMapper<User> rm = new RowMapper<User>() {
             @Override
-            public User mapRow(ResultSet rs) throws SQLException {
-                return new User(
-                        rs.getString("userId"),
-                        rs.getString("password"),
-                        rs.getString("name"),
-                        rs.getString("email")
-                        );
+            public User mapRow(ResultSet rs) {
+                try {
+                    return new User(
+                            rs.getString("userId"),
+                            rs.getString("password"),
+                            rs.getString("name"),
+                            rs.getString("email")
+                            );
+                } catch (SQLException e) {
+                    throw new DataAccessException(e);
+                }
             }
         };
         JdbcTemplate template = new JdbcTemplate();

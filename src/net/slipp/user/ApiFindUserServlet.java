@@ -2,6 +2,7 @@ package net.slipp.user;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import net.slipp.support.jdbc.DataAccessException;
 
 @WebServlet("/api/users/find")
 public class ApiFindUserServlet extends HttpServlet {
@@ -23,21 +26,18 @@ public class ApiFindUserServlet extends HttpServlet {
         }
         
         UserDAO userDao = new UserDAO();
-        try {
-            User user = userDao.findByUserId(userId);
-            if (user == null) {
-                return;
-            }
-            final GsonBuilder builder = new GsonBuilder();
-            builder.excludeFieldsWithoutExposeAnnotation();
-            final Gson gson = builder.create();
-            
-            String jsonData = gson.toJson(user);
-            resp.setContentType("application/json;charset=UTF-8");
-            
-            PrintWriter out = resp.getWriter();
-            out.print(jsonData);
-        } catch (Exception e) {
+        User user = userDao.findByUserId(userId);
+        if (user == null) {
+            return;
         }
+        final GsonBuilder builder = new GsonBuilder();
+        builder.excludeFieldsWithoutExposeAnnotation();
+        final Gson gson = builder.create();
+        
+        String jsonData = gson.toJson(user);
+        resp.setContentType("application/json;charset=UTF-8");
+        
+        PrintWriter out = resp.getWriter();
+        out.print(jsonData);
     }
 }
