@@ -101,13 +101,9 @@ public class JdbcTemplate {
     private PreparedStatementSetter createPreparedStatementSetter(Object... parameters) {
         return new PreparedStatementSetter() {
             @Override
-            public void setParameters(PreparedStatement pstmt) {
+            public void setParameters(PreparedStatement pstmt) throws SQLException {
                 for (int i = 0; i < parameters.length; i++) {
-                    try {
-                        pstmt.setObject(i + 1, parameters[i]);
-                    } catch (SQLException e) {
-                        throw new DataAccessException(e);
-                    }
+                    pstmt.setObject(i + 1, parameters[i]);
                 }
             }
         };

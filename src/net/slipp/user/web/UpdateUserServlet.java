@@ -2,7 +2,6 @@ package net.slipp.user.web;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.sql.SQLException;
 import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
@@ -56,11 +55,7 @@ public class UpdateUserServlet extends HttpServlet {
         }
         
         UserDAO userDAO = new UserDAO();
-        try {
-            userDAO.updateUser(user);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        userDAO.updateUser(user);
         response.sendRedirect("/");
     }
     
